@@ -1,9 +1,11 @@
   {
     "compilerOptions": {
+      "lib": ["es2020"],
       "module": "commonjs",
+      "target": "es2020",
       "esModuleInterop": true,
       "allowSyntheticDefaultImports": true,
-      "target": "es6",
+    
       "strict": true,
       "moduleResolution": "node",
       "sourceMap": true,

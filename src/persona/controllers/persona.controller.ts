@@ -1,7 +1,7 @@
-
 import { Application, Request, Response } from "express";
-import { STATUS_CODES } from "http";
+import { LooseObject } from '../../config/sequelize'
 import { Persona } from '../model/persona'
+
 
 async function addPersona(req: Request, res: Response)
 {
@@ -10,13 +10,10 @@ async function addPersona(req: Request, res: Response)
     try {
       const persona= await Persona.create(cuerpo);
       res.status(201).send(persona);
-    } catch (ex:any)
+    } catch (ex)
     {
-     // console.log(ex);
-      res.status(501).send(ex);
-      return;
+      res.status(501).send("Error at addPersona: "+ex.message);
     }
-
 }
 
 async function findById(req: Request, res: Response)
@@ -27,7 +24,11 @@ async function findById(req: Request, res: Response)
   else
     res.status(200).send(persona);
 }
-
+async function findAllPersona(req: Request, res: Response)
+{
+  const personas= await Persona.findAll();
+  res.status(200).send(personas);
+}
 async function deletePersona(req: Request, res: Response)
 {
   const persona = await Persona.findByPk(req.params.id);
@@ -49,19 +50,42 @@ async function updatePersona(req: Request, res: Response)
     try {
       const personaUpdate=Object.assign(persona,req.body);
       personaUpdate.save();
-      res.status(200).send();
+      res.status(200).send(personaUpdate);
     } catch (ex)
     {
-      res.status(501).send(ex);
+      res.status(501).send(ex.message);
       return;
     }
   }
 }
+
+
+async function searchPersona(req: Request, res: Response)
+{
+  console.log("en SearchPersona");
+  const query=req.query;
+  
+  var condWhere:LooseObject={}
+  for (var prop in query) 
+  {
+//    console.log("Valor de propiedad: "+prop+" es: "+query[prop]);
+    condWhere[prop]=query[prop];
+    //condWhere[prop]={ [Op.like]: query[prop]};
+  }
+ 
+ // console.log(condWhere)
+  const persona = await Persona.findAndCountAll({ where: condWhere});
+
+  res.status(200).send(persona);
+}
 export const personaEndpoint = (app: Application): void => {
  
-  app.post("/persona/add", addPersona); 
+  app.post("/persona", addPersona); 
   app.delete("/persona/:id", deletePersona); 
-  app.get("/persona/:id", findById)
+  app.get("/persona/:id/id", findById)
+  app.get("/persona", findAllPersona)
   app.put("/persona/:id", updatePersona); 
+  app.get("/persona/search", searchPersona); 
+
 };
 

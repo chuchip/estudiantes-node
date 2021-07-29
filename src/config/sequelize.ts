@@ -13,6 +13,9 @@ import {
     } catch (error) {
         console.error('Unable to connect to the database:', error);
     }
-}
+  }
+  export interface LooseObject {
+    [key: string]: any
+  }
 
 

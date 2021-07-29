@@ -1,7 +1,7 @@
 import express from "express";
 import path from "path";
 
-import { loadApiEndpoints } from "./controllers/api";
+import { endPoints } from "./routers";
 import { sequelize,testDB } from "./config/sequelize"
 
 
@@ -17,6 +17,6 @@ app.use(
   express.static(path.join(__dirname, "../public"), { maxAge: 31557600000 })
 );
 
-loadApiEndpoints(app);
+endPoints(app);
 
 export default app;

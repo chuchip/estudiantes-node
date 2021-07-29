@@ -29,6 +29,10 @@ npm run build
 npm run start
 ```
 
+### Create database Postgres en Docker
+docker volume create postgres_estudiantes
+docker run -d --volume postgres_estudiantes:/var/lib/postgresql/data --name postgres_estudiantes -ePOSTGRES_USER=postgres  -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=estudiantes -p 5432:5432 postgres
+
 ## Testing
 
 ### Jest with supertest

@@ -64,7 +64,7 @@ async function searchPersona(req: Request, res: Response)
 {
   console.log("en SearchPersona");
   const query=req.query;
-  
+ /* 
   var condWhere:LooseObject={}
   for (var prop in query) 
   {
@@ -72,20 +72,19 @@ async function searchPersona(req: Request, res: Response)
     condWhere[prop]=query[prop];
     //condWhere[prop]={ [Op.like]: query[prop]};
   }
- 
+ */
  // console.log(condWhere)
-  const persona = await Persona.findAndCountAll({ where: condWhere});
+  const persona = await Persona.findAndCountAll({ where: query});
 
   res.status(200).send(persona);
 }
 export const personaEndpoint = (app: Application): void => {
  
   app.post("/persona", addPersona); 
-  app.delete("/persona/:id", deletePersona); 
+  app.delete("/persona/:id", deletePersona);   
+  app.put("/persona/:id", updatePersona); 
   app.get("/persona/:id/id", findById)
   app.get("/persona", findAllPersona)
-  app.put("/persona/:id", updatePersona); 
   app.get("/persona/search", searchPersona); 
-
 };
 

@@ -33,6 +33,12 @@ npm run start
 docker volume create postgres_estudiantes
 docker run -d --volume postgres_estudiantes:/var/lib/postgresql/data --name postgres_estudiantes -ePOSTGRES_USER=postgres  -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=estudiantes -p 5432:5432 postgres
 
+### Crear tablas por primera vez
+Sequelize no crea las tablas por ti. Por eso es necesario ejecutar esta sentencia la primera vez para crearlas
+
+> npx ts-node-dev ./src/create_table.ts 
+
+
 ## Testing
 
 ### Jest with supertest

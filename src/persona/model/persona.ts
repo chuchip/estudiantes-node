@@ -25,7 +25,7 @@ import {
   {   
     public id_persona!: number; // Note that the `null assertion` `!` is required in strict mode.
     public user!: string;
-    public password!: string | null; // for nullable fields
+    public password!: string; // for nullable fields
     public name!: string;
     public surname!:string;
     public company_email!:string;

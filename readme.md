@@ -34,7 +34,10 @@ docker volume create postgres_estudiantes
 docker run -d --volume postgres_estudiantes:/var/lib/postgresql/data --name postgres_estudiantes -ePOSTGRES_USER=postgres  -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=estudiantes -p 5432:5432 postgres
 
 ## Testing
-
+Desde un terminal bash.
+- Devuelve todos los registros
+  curl localhost:3000/persona|py -mjson.tool
+  
 ### Jest with supertest
 
 ```

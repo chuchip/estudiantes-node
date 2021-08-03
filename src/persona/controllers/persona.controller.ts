@@ -1,8 +1,8 @@
 import { Application, Request, Response } from "express";
 import { LooseObject } from '../../config/sequelize'
 import { Persona } from '../model/persona'
-
-
+import { PersonOutputDto } from '../model/dto/output/PersonOutputDto'
+import { personToDto} from '../model/mapper'
 async function addPersona(req: Request, res: Response)
 {
     const cuerpo:Persona = req.body;
@@ -26,8 +26,18 @@ async function findById(req: Request, res: Response)
 }
 async function findAllPersona(req: Request, res: Response)
 {
+  
   const personas= await Persona.findAll();
-  res.status(200).send(personas);
+  const personasOutput:PersonOutputDto[]=[];
+  personas.forEach( p =>   
+    {      
+      personasOutput.push(
+        personToDto(p)
+      )
+    }
+  )
+
+  res.status(200).send(personasOutput);
 }
 async function deletePersona(req: Request, res: Response)
 {

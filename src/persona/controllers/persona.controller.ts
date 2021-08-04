@@ -26,7 +26,7 @@ async function findById(req: Request, res: Response)
 }
 async function findAllPersona(req: Request, res: Response)
 {
-  
+  console.log("Buscando todas las personas");
   const personas= await Persona.findAll();
   const personasOutput:PersonOutputDto[]=[];
   personas.forEach( p =>   
